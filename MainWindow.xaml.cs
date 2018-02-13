@@ -20,6 +20,11 @@ using System.Numerics;
 namespace Theme.WPF
 {
 
+    public static class openStats
+    {
+        public static bool loginPassed = false;
+    }
+
     public class VisualHost : UIElement
     {
         public Visual Visual { get; set; }
@@ -44,7 +49,7 @@ namespace Theme.WPF
     {
         //public static DrawingVisual drawingVisual = new DrawingVisual();
         //public DrawingContext drawingContext = drawingVisual.RenderOpen();
-        public static bool loginPassed = false;
+        
         public static DoubleAnimation loginAnimation;
         public MainWindow()
         {
@@ -60,36 +65,11 @@ namespace Theme.WPF
 
         }
 
+
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
-
-        /*
-        public async Task DoStuff()
-        {
-            await Task.Run(() =>
-            {
-                LongRunningOperation();
-            });
-            
-        }
-
-        private async Task LongRunningOperation()
-        {
-            // Create a rectangle and draw it in the DrawingContext.
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-            Rect rect = new Rect(new System.Windows.Point(10, 10), new System.Windows.Size(10, 10));
-            drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect);
-            Rect rect1 = new Rect(new System.Windows.Point(20, 20), new System.Windows.Size(10, 10));
-            drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect1);
-            Rect rect2 = new Rect(new System.Windows.Point(30, 30), new System.Windows.Size(10, 10));
-            drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect2);
-            loadingAnimation.Children.Add(new VisualHost { Visual = drawingVisual });
-            drawingContext.Close();
-        }
-        */
         public static int alphaCounter = 0;
 
         public void drawLoading(object state)
@@ -113,86 +93,7 @@ namespace Theme.WPF
                 C++;
                 Thread.Sleep(1);
             }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 90, 110, 130));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 30);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 100, 140, 180));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 45);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 90, 110, 130));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 60);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 80, 90, 100));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 75);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {*/
+            */
             for (double i = 0; i <= 1; i+=0.05) { 
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
@@ -200,112 +101,6 @@ namespace Theme.WPF
                 }));
                 Thread.Sleep(20);
             }
-            //C++;
-            //Thread.Sleep(1);
-            //}
-            /*
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 100, 140, 180));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 105);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 90, 110, 130));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 120);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-
-            C = 0;
-            while (C < 64)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 80, 90, 100));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 135);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-            /*
-
-            Dispatcher.BeginInvoke(new Action(delegate ()
-            {
-                loadingAnimation.Children.Clear();
-                DrawingVisual drawingVisual = new DrawingVisual();
-                DrawingContext drawingContext = drawingVisual.RenderOpen();
-                Rect rect = new Rect(new System.Windows.Point(10, 10), new System.Windows.Size(15, 15));
-                drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect);
-                loadingAnimation.Children.Add(new VisualHost { Visual = drawingVisual });
-                drawingContext.Close();
-            }));
-
-            Thread.Sleep(300);
-
-            Dispatcher.BeginInvoke(new Action(delegate ()
-            {
-                DrawingVisual drawingVisual = new DrawingVisual();
-                DrawingContext drawingContext = drawingVisual.RenderOpen();
-                Rect rect = new Rect(new System.Windows.Point(20, 20), new System.Windows.Size(15, 15));
-                drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect);
-                loadingAnimation.Children.Add(new VisualHost { Visual = drawingVisual });
-                drawingContext.Close();
-            }));
-
-            Thread.Sleep(300);
-
-            Dispatcher.BeginInvoke(new Action(delegate ()
-            {
-                DrawingVisual drawingVisual = new DrawingVisual();
-                DrawingContext drawingContext = drawingVisual.RenderOpen();
-                Rect rect = new Rect(new System.Windows.Point(30, 30), new System.Windows.Size(15, 15));
-                drawingContext.DrawRectangle(System.Windows.Media.Brushes.Aqua, (System.Windows.Media.Pen)null, rect);
-                loadingAnimation.Children.Add(new VisualHost { Visual = drawingVisual });
-                drawingContext.Close();
-            }));
-
-            */
-
-            //Dispatcher.BeginInvoke(new Action(delegate ()
-            //{
-            //loadingAnimation.Children.Add(new VisualHost { Visual = drawingVisual });
-            //drawingContext.Close();
-            //}));
-
-            //Thread.Sleep(1000);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -370,6 +165,24 @@ namespace Theme.WPF
                 exitFromLogin();
             }
         }
+
+        private void checkStabLog(object state)
+        {
+            if (!openStats.loginPassed)
+            {
+
+            }
+            else
+            {
+                var mainPage = new Workpage();
+                mainPage.Show();
+                Dispatcher.BeginInvoke(new Action(delegate ()
+                {
+                    this.Close();
+                }));
+            }
+        }
+
         private void exitFromLogin()
         {
             loginAnimation = new DoubleAnimation();
@@ -385,36 +198,14 @@ namespace Theme.WPF
             lB.BeginAnimation(OpacityProperty, loginAnimation);
             pB.BeginAnimation(OpacityProperty, loginAnimation);
 
-
-            //object value = null;
             Backbone table = new Backbone(":::\\encrypted_sd.fish");
 
             var _tabth = new Thread(table.Initialize);
             _tabth.Start();
-            //_tabth.Join();
 
-            if (table.Status == 0x02) {
-                var mainPage = new Workpage();
-                mainPage.Show();
-            } else {
-                MessageBox.Show("Login unsuccessful!");
-            }
-            //loginAnimation = new DoubleAnimation();
-            //loginAnimation.From = 0;
-            //loginAnimation.To = 1;
-            //loginAnimation.AccelerationRatio = 0.5;
-            //loginAnimation.DecelerationRatio = 0.5;
-            //loginAnimation.Completed += loadingTextFadein;
-            //loginAnimation.Duration = TimeSpan.FromSeconds(1.5);
-            //loadingGif.BeginAnimation(OpacityProperty, loginAnimation);
-
-            //Storyboard sbr = this.FindResource("RotateAnim") as Storyboard;
-            //Storyboard.SetTarget(sbr, this.loadingGif);
-            //sbr.Begin();
-
-            //< DoubleAnimation
-            //            Storyboard.TargetProperty = "(Rectangle.RenderTransform).(RotateTransform.Angle)"
-            //            To = "-360" Duration = "0:0:6" RepeatBehavior = "Forever" />
+            //TimerCallback tm = new TimerCallback(checkStabLog);
+            // создаем таймер
+            Timer timer = new Timer(checkStabLog, null, 0, 500);
         }
 
         public void loadingTextFadein(object sender, EventArgs e)
