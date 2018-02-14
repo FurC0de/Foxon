@@ -5,10 +5,10 @@
         xmlns:toolkitInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:System="clr-namespace:System;assembly=System" x:Class="Theme.WPF.MainWindow"
-        Title="Foxon dev. build 1.0d" Height="600" Width="440" Background="#FF1D272E"
+        Title="Foxon dev. build 1.0d" Height="600" Width="440" Background="#771D272E"
         Opacity="1"
         VisualOpacityMask="Blue"
-        Loaded="Window_Loaded" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" AllowsTransparency="True"
+        Loaded="Window_Loaded" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="Manual" AllowsTransparency="True"
         >
     <Window.Resources>
         <ResourceDictionary>
@@ -81,8 +81,14 @@
             <RowDefinition Height="0*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Content="Foxon dev. build 1.0d" Height="27" Width="160" FontFamily="Lao UI" FontSize="14" Foreground="#FF6F7176" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,-3,0,576" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-        <Grid Background="#FF1C2738" Margin="0,22,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <Rectangle Fill="#AA16272C" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,0,0,578">
+            <Rectangle.Effect>
+                <BlurEffect Radius="2"/>
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Label x:Name="WindowLable" Content="Foxon dev. build 1.0d" Height="27" Width="160" FontFamily="Lao UI" FontSize="14" Foreground="#FF6F7176" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,-3,0,576" Grid.RowSpan="2" Grid.ColumnSpan="2" Cursor="AppStarting"/>
+        <Grid Background="#551C2738" Margin="0,22,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="18" Direction="64" Color="#FF0E0C0C" Opacity="0.25"/>
             </Grid.Effect>
@@ -94,7 +100,7 @@
                 <ColumnDefinition Width="360"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="1" Fill="#FF222934" HorizontalAlignment="Left" Height="360" Margin="0,100,0,0" VerticalAlignment="Top" Width="360" StrokeThickness="2" Grid.Row="0" x:Name="G">
+            <Rectangle Grid.Column="1" Fill="#FF22313C" HorizontalAlignment="Left" Height="360" Margin="0,100,0,0" VerticalAlignment="Top" Width="360" StrokeThickness="2" Grid.Row="0" x:Name="G">
                 <Rectangle.Effect>
                     <DropShadowEffect BlurRadius="20" Color="#FF4B5F61" Direction="65" Opacity="0.7" ShadowDepth="10"/>
                 </Rectangle.Effect>
@@ -126,7 +132,11 @@
             <Label x:Name="pL" Content="Password" Grid.Column="1" HorizontalAlignment="Left" Margin="11,195,0,0" VerticalAlignment="Top" Width="97" Height="36" FontFamily="Lao UI" FontSize="18" Foreground="#FF718691"/>
             <Canvas x:Name="loadingAnimation" HorizontalAlignment="Left" Height="200" Margin="55,273,0,0" VerticalAlignment="Top" Width="200" Grid.Column="1"/>
             <Button x:Name="loginButton" Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="255,417,0,0" VerticalAlignment="Top" Width="95" Height="32" Click="Button_Click" Background="#FF25313E" BorderBrush="{x:Null}" Foreground="#FFA0A0A6" FontFamily="Lao UI" FontSize="14"/>
-            <Image Grid.Column="1" Margin="329,505,10,10" Source="22.png" Stretch="Fill" Grid.ColumnSpan="2" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image Grid.Column="1" Margin="329,505,10,10" Source="22.png" Stretch="Fill" Grid.ColumnSpan="2" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" OpacityMask="#66A0A0A0">
+                <Image.Effect>
+                    <BlurEffect Radius="2"/>
+                </Image.Effect>
+            </Image>
         </Grid>
         <Label x:Name="LogLabel" Grid.ColumnSpan="2" Content="Logging in..." Margin="140,202,140,362" Grid.RowSpan="2" FontFamily="qontra" FontSize="22" VerticalAlignment="Center" HorizontalContentAlignment="Center" Background="{x:Null}" Foreground="#FFBBC1C5">
             <Label.Effect>

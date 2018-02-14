@@ -15,14 +15,45 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
-using WpfAnimatedGif;
 using System.Numerics;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using System.Windows.Threading;
+
 namespace Theme.WPF
 {
 
-    public static class openStats
+    internal enum AccentState
     {
-        public static bool loginPassed = false;
+        ACCENT_DISABLED = 0,
+        ACCENT_ENABLE_GRADIENT = 1,
+        ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+        ACCENT_ENABLE_BLURBEHIND = 3,
+        ACCENT_INVALID_STATE = 4
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct AccentPolicy
+    {
+        public AccentState AccentState;
+        public int AccentFlags;
+        public int GradientColor;
+        public int AnimationId;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct WindowCompositionAttributeData
+    {
+        public WindowCompositionAttribute Attribute;
+        public IntPtr Data;
+        public int SizeOfData;
+    }
+
+    internal enum WindowCompositionAttribute
+    {
+        // ...
+        WCA_ACCENT_POLICY = 19
+        // ...
     }
 
     public class VisualHost : UIElement
@@ -42,30 +73,121 @@ namespace Theme.WPF
 
     public class AsyncAwait
     {
-       
+
+    }
+
+    public static class Animations
+    {
+        public static DoubleAnimation logChangeSize
+        {
+            get
+            { 
+                var t = new DoubleAnimation(); //0, 440, TimeSpan.FromSeconds(1)
+                t.From = 0;
+                t.To = 440;
+                t.Duration = TimeSpan.FromSeconds(1);
+                t.DecelerationRatio = 0.5;
+                t.AccelerationRatio = 0.5;
+                return t;
+            }
+            set{}
+        }
+
+        public static DoubleAnimation sFadeinAnimation
+        {
+            get
+            { 
+                var t = new DoubleAnimation(); //0, 1, TimeSpan.FromSeconds(1)
+                t.From = 0;
+                t.To = 1;
+                t.Duration = TimeSpan.FromSeconds(1);
+                t.AccelerationRatio = 0.5;
+                t.DecelerationRatio = 0.5;
+                return t;
+            }
+            set{}
+        }
+
+        public static DoubleAnimation logChangeSizeBack
+        {
+            get
+            {
+                var t = new DoubleAnimation(); //0, 440, TimeSpan.FromSeconds(1)
+                t.From = 440;
+                t.To = 0;
+                //t.Completed += ;
+                t.Duration = TimeSpan.FromSeconds(1);
+                t.DecelerationRatio = 0.5;
+                t.AccelerationRatio = 0.5;
+                return t;
+            }
+            set { }
+        }
+
+        public static DoubleAnimation sFadeoutAnimation
+        {
+            get
+            {
+                var t = new DoubleAnimation(); //0, 1, TimeSpan.FromSeconds(1)
+                t.From = 1;
+                t.To = 0;
+                t.Duration = TimeSpan.FromSeconds(1);
+                t.AccelerationRatio = 0.5;
+                t.DecelerationRatio = 0.5;
+                return t;
+            }
+            set { }
+        }
+
     }
 
     public partial class MainWindow : Window
     {
+
         //public static DrawingVisual drawingVisual = new DrawingVisual();
         //public DrawingContext drawingContext = drawingVisual.RenderOpen();
-        
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        internal void EnableBlur()
+        {
+            var windowHelper = new WindowInteropHelper(this);
+
+            var accent = new AccentPolicy();
+            accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
+
+            var accentStructSize = Marshal.SizeOf(accent);
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData();
+            data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
+
+            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
+
         public static DoubleAnimation loginAnimation;
         public MainWindow()
         {
+            
             InitializeComponent();
-
+            main = this;
             /*double n = 0.0;
             for (n = 0; n < 1; n+=0.1) {
                 this.Opacity = n;
                 Thread.Sleep(10);
             }*/
-            
+
             // анимация для ширины
 
         }
 
-
+        internal static MainWindow main;
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -78,7 +200,7 @@ namespace Theme.WPF
             int C = 0;
             while (C < 64)
             {
-                Dispatcher.BeginInvoke(new Action(delegate ()
+                .BeginInvoke(new Action(delegate ()
                 {
                     System.Windows.Shapes.Rectangle rect;
                     rect = new System.Windows.Shapes.Rectangle();
@@ -93,21 +215,30 @@ namespace Theme.WPF
                 C++;
                 Thread.Sleep(1);
             }
-            */
+            
             for (double i = 0; i <= 1; i+=0.05) { 
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
                     this.Opacity = i;
                 }));
                 Thread.Sleep(20);
-            }
+            }*/
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+
+            EnableBlur();
+            this.Width = 0;
+            this.BeginAnimation(Window.WidthProperty, Animations.logChangeSize );
+            this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
+
             TimerCallback tm = new TimerCallback(drawLoading);
             // создаем таймер
             Timer timer = new Timer(drawLoading, null, 0, Int32.MaxValue);
+            
+
 
             lL.Opacity = 0;
             pL.Opacity = 0;
@@ -124,12 +255,6 @@ namespace Theme.WPF
             lB.BeginAnimation(TextBox.OpacityProperty, loginAnimation);
             pB.BeginAnimation(PasswordBox.OpacityProperty, loginAnimation);
 
-           // loadingGif.Opacity = 0;
-           // var image = new BitmapImage();
-           // image.BeginInit();
-           // image.UriSource = new Uri(@"Y:\Олимпиады - Ищенко\Singularity Messanger\Theme.WPF\Resources\loading_sqares.gif");
-           // image.EndInit();
-           // ImageBehavior.SetAnimatedSource(loadingGif, image);
         }
         private void LoginAnimation_Completed(object sender, EventArgs e)
         {
@@ -158,6 +283,11 @@ namespace Theme.WPF
             }
         }
 
+        private void exitOnSlip(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void pB_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) {
@@ -165,20 +295,35 @@ namespace Theme.WPF
                 exitFromLogin();
             }
         }
+        private bool _loginPassed;
+
+        public bool loginPassed
+        {
+            get => _loginPassed;
+            set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = value; })); }
+        }
 
         private void checkStabLog(object state)
         {
-            if (!openStats.loginPassed)
+            if (!loginPassed)
             {
-
+                Dispatcher.BeginInvoke(new Action(delegate ()
+                {
+                    this.WindowLable.Content = "NOT LOGGED IN!";
+                }));
+                
             }
             else
             {
-                var mainPage = new Workpage();
-                mainPage.Show();
-                Dispatcher.BeginInvoke(new Action(delegate ()
+                Dispatcher.Invoke(new Action(delegate ()
                 {
-                    this.Close();
+                    this.WindowLable.Content = "LOGGED IN!";
+                    var mainPage = new Workpage();
+                    mainPage.Show();
+                    DoubleAnimation outAnim = Animations.logChangeSizeBack;
+                    outAnim.Completed += exitOnSlip;
+                    this.BeginAnimation(Window.WidthProperty, outAnim);
+                    this.BeginAnimation(Window.OpacityProperty, Animations.sFadeoutAnimation);
                 }));
             }
         }
@@ -197,6 +342,15 @@ namespace Theme.WPF
             G.BeginAnimation(OpacityProperty, loginAnimation);
             lB.BeginAnimation(OpacityProperty, loginAnimation);
             pB.BeginAnimation(OpacityProperty, loginAnimation);
+            loginButton.BeginAnimation(OpacityProperty, loginAnimation);
+
+            var fadeinAnimation = new DoubleAnimation();
+            fadeinAnimation.From = 0;
+            fadeinAnimation.To = 1;
+            fadeinAnimation.AccelerationRatio = 0.5;
+            fadeinAnimation.DecelerationRatio = 0.5;
+            fadeinAnimation.Duration = TimeSpan.FromSeconds(1);
+            //this.BeginAnimation(Backgrou, fadeinAnimation);
 
             Backbone table = new Backbone(":::\\encrypted_sd.fish");
 

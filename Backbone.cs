@@ -20,17 +20,17 @@ using System.Numerics;
 
 namespace Theme.WPF
 {
-    class Singulum
+    public class Singulum
     {
 
     }
 
-    class SingulumData
+    public class SingulumData
     {
         public bool isNew = false;
     }
 
-    class Backbone
+    public class Backbone
     {
         public Backbone(string storage)
         {
@@ -39,26 +39,34 @@ namespace Theme.WPF
 
         public void Initialize()
         {
+            Thread.Sleep(5000);
+            //SingulumData _RES = new SingulumData();
 
-            this.Status = 0x01; // 0x01 = init started
-            if (tryLoad(DataStorage).isNew)
-            {
-                openStats.loginPassed = false;
-                this.Status = 0xff; //data is new. nready for work
-            }
-            else
-            {
-                openStats.loginPassed = true;
-                this.Status = 0x02; //ready for work (data loaded successfully)
-            }
+            //this.Status = 0x01; // 0x01 = init started
+            //MainWindow.main.loginPassed = true;
+
+            MainWindow.main.loginPassed = true;
+
+
+            //if ( _RES.isNew == false )
+            //{
+            //    MainWindow.main.loginPassed = false;
+            //    //this.Status = 0xff; //data is new. nready for work
+            //}
+            //else
+            //{
+            //    MainWindow.main.loginPassed = true;
+            //    //this.Status = 0x02; //ready for work (data loaded successfully)
+            //}
+
         } 
         public byte Status { get; internal set; } = 0x00;
         public string DataStorage { get; internal set; }
         public Singulum protocol = new Singulum();
-        private SingulumData tryLoad(string path)
+        /*public SingulumData tryLoad(string path)
         {
             Thread.Sleep(5000);
             return new SingulumData();
-        }
+        }*/
     }
 }
