@@ -285,6 +285,8 @@ namespace Theme.WPF
 
         private void exitOnSlip(object sender, EventArgs e)
         {
+            var mainPage = new Workpage();
+            mainPage.Show();
             this.Close();
         }
 
@@ -300,26 +302,25 @@ namespace Theme.WPF
         public bool loginPassed
         {
             get => _loginPassed;
-            set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = value; })); }
+            set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = true; })); }
         }
 
         private void checkStabLog(object state)
         {
-            if (!loginPassed)
+            if (loginPassed)
             {
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
-                    this.WindowLable.Content = "NOT LOGGED IN!";
+                    //this.WindowLable.Content = "NOT LOGGED IN!";
                 }));
                 
             }
             else
             {
-                Dispatcher.Invoke(new Action(delegate ()
+                Dispatcher.BeginInvoke(new Action(delegate ()
                 {
                     this.WindowLable.Content = "LOGGED IN!";
-                    var mainPage = new Workpage();
-                    mainPage.Show();
+                    
                     DoubleAnimation outAnim = Animations.logChangeSizeBack;
                     outAnim.Completed += exitOnSlip;
                     this.BeginAnimation(Window.WidthProperty, outAnim);
@@ -359,7 +360,7 @@ namespace Theme.WPF
 
             //TimerCallback tm = new TimerCallback(checkStabLog);
             // создаем таймер
-            Timer timer = new Timer(checkStabLog, null, 0, 500);
+            Timer timer = new Timer(checkStabLog, null, 0, 10000);
         }
 
         public void loadingTextFadein(object sender, EventArgs e)
