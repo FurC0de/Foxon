@@ -7,6 +7,7 @@
         xmlns:System="clr-namespace:System;assembly=System" x:Class="Theme.WPF.Workpage"
         Title="Foxon dev. build 1.0d" Height="700" Width="1000" Background="#FF1D272E"
         Loaded="Window_Loaded" WindowStyle="None" AllowsTransparency="True"
+        Opacity="0.5"
         >
     <Grid Background="#FF1C2738">
         

@@ -141,6 +141,8 @@ namespace Theme.WPF
 
     }
 
+    public class 
+
     public partial class MainWindow : Window
     {
 
@@ -187,7 +189,10 @@ namespace Theme.WPF
 
         }
 
-        internal static MainWindow main;
+        public static MainWindow main {
+            get;
+            internal set;
+        }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -302,12 +307,12 @@ namespace Theme.WPF
         public bool loginPassed
         {
             get => _loginPassed;
-            set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = true; })); }
+            set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = value; })); }
         }
 
         private void checkStabLog(object state)
         {
-            if (loginPassed)
+            if (!loginPassed)
             {
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
@@ -317,10 +322,10 @@ namespace Theme.WPF
             }
             else
             {
+                loginPassed = false;
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
                     this.WindowLable.Content = "LOGGED IN!";
-                    
                     DoubleAnimation outAnim = Animations.logChangeSizeBack;
                     outAnim.Completed += exitOnSlip;
                     this.BeginAnimation(Window.WidthProperty, outAnim);
@@ -360,7 +365,7 @@ namespace Theme.WPF
 
             //TimerCallback tm = new TimerCallback(checkStabLog);
             // создаем таймер
-            Timer timer = new Timer(checkStabLog, null, 0, 10000);
+            Timer timer = new Timer(checkStabLog, null, 0, 500);
         }
 
         public void loadingTextFadein(object sender, EventArgs e)

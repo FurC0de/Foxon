@@ -39,7 +39,7 @@ namespace Theme.WPF
 
         public void Initialize()
         {
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
             //SingulumData _RES = new SingulumData();
 
             //this.Status = 0x01; // 0x01 = init started
