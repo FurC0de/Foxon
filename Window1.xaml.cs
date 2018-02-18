@@ -41,9 +41,14 @@ namespace Theme.WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            TimerCallback tm = new TimerCallback(drawLoading);
+            //TimerCallback tm = new TimerCallback(drawLoading);
             // создаем таймер
-            Timer timer = new Timer(drawLoading, null, 0, Int32.MaxValue);
+            //Timer timer = new Timer(drawLoading, null, 0, Int32.MaxValue);
+            var sAnim = Animations.logChangeSize;
+            sAnim.To = 1000;
+            this.Width = 0;
+            this.BeginAnimation(Window.WidthProperty, sAnim);
+            this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
 
         }
     }
