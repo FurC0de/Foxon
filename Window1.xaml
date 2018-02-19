@@ -9,7 +9,7 @@
         Loaded="Window_Loaded" WindowStyle="None" AllowsTransparency="True"
         Opacity="1"
         >
-    <Grid Background="#EF1C2738">
+    <Grid Background="#CF1C2738">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="299*"/>
             <ColumnDefinition Width="201*"/>

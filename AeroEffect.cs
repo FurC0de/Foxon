@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Drawing;
+using Microsoft.Win32;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,36 @@ namespace Theme.WPF
     /// <summary>
     /// Helpmethods for OS Version checks
     /// </summary>
-    public class VersionHelper
+    /// 
+
+    public class Aero
+    {
+        public static void AutoApply(Window sender)
+        {
+            if (VersionHelper.IsWindows10orHigher)
+            {
+                Int16 CurrentBuildNumber = 0;
+                Int16.TryParse(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber", "").ToString(), out CurrentBuildNumber);
+                //MainWindow.main.WindowLable.Content = CurrentBuildNumber;
+
+                if (CurrentBuildNumber >= 16353)
+                {
+
+                }
+                else
+                {
+                    //MainWindow.main.WindowLable.Content = "WIN 10 ENB BLUR";
+                    AeroEffect.Win10.EnableBlur(sender);
+                }
+            }
+            else
+            {
+                AeroEffect.Win7.EnableBlur(sender);
+            }
+        }
+    }
+
+        public class VersionHelper
     {
         /// <summary>
         /// OS is at least Windows Vista
@@ -45,6 +75,29 @@ namespace Theme.WPF
         /// <summary>
         /// OS is Windows 7 or higher
         /// </summary>
+        /// 
+        public static bool IsWindows10orHigher
+        {
+            get
+            {
+                //MainWindow.main.WindowLable.Content = Environment.OSVersion.Version.Minor;
+
+                if (Environment.OSVersion.Version.Major == 6 &&
+                    Environment.OSVersion.Version.Minor >= 2)
+                {
+                    return true;
+                }
+                else if (Environment.OSVersion.Version.Major > 6)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public static bool IsWindows7orHigher
         {
             get

@@ -178,8 +178,8 @@ namespace Theme.WPF
             TimerCallback tm = new TimerCallback(drawLoading);
             // создаем таймер
             Timer timer = new Timer(drawLoading, null, 0, Int32.MaxValue);
-            
 
+            Aero.AutoApply(this);
 
             lL.Opacity = 0;
             pL.Opacity = 0;

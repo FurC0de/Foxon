@@ -15,8 +15,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <!-- Light Theme
                 <ResourceDictionary Source="Themes/Metro/Dark/MetroDark.MSControls.Core.Implicit.xaml" />
-                <ResourceDictionary Source="Themes/Metro/Dark/MetroDark.MSControls.Toolkit.Implicit.xaml" /> -->
-
+                <ResourceDictionary Source="Themes/Metro/Dark/MetroDark.MSControls.Toolkit.Implicit.xaml" /> 
+                <ResourceDictionary Source="/PresentationFramework.Aero;component/themes/Aero.NormalColor.xaml"/>-->
                 <!-- Dark Theme -->
                 <!--<ResourceDictionary Source="Themes/Metro/Light/MetroLight.MSControls.Core.Implicit.xaml" />
                 <ResourceDictionary Source="Themes/Metro/Light/MetroLight.MSControls.Toolkit.Implicit.xaml" />-->
@@ -105,7 +105,7 @@
                     <DropShadowEffect BlurRadius="20" Color="#FF4B5F61" Direction="65" Opacity="0.7" ShadowDepth="10"/>
                 </Rectangle.Effect>
             </Rectangle>
-            <TextBox x:Name="lB" Grid.Column="1" HorizontalAlignment="Left" Height="38" Margin="11,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" Background="{x:Null}" TextChanged="TextBox_TextChanged" FontFamily="Dense" FontSize="24" MinHeight="30" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="2,1,0,0" TextOptions.TextHintingMode="Animated" KeyDown="lB_KeyDown" SelectionBrush="{DynamicResource GlyphBackgroundBrush}" Foreground="#FF637174" CaretBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBox x:Name="lB" Grid.Column="1" HorizontalAlignment="Left" Height="38" Margin="11,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" Background="{x:Null}" TextChanged="TextBox_TextChanged" FontFamily="Dense" FontSize="24" MinHeight="30" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="2,1,0,0" TextOptions.TextHintingMode="Animated" KeyDown="lB_KeyDown" Foreground="#FF637174" CaretBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                 <TextBox.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF3E4651" Offset="0"/>
@@ -117,7 +117,7 @@
                 </TextBox.Effect>
 
             </TextBox>
-            <PasswordBox x:Name="pB" Grid.Column="1" HorizontalAlignment="Left" Height="38" Margin="11,230,0,0" VerticalAlignment="Top" Width="335" Background="{x:Null}" FontFamily="Dense" FontSize="24" MinHeight="30" BorderThickness="2,1,0,0" SelectionBrush="{DynamicResource GlyphBackgroundBrush}" PasswordChar="*" KeyDown="pB_KeyDown" Foreground="#FF637174" CaretBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <PasswordBox x:Name="pB" Grid.Column="1" HorizontalAlignment="Left" Height="38" Margin="11,230,0,0" VerticalAlignment="Top" Width="335" Background="{x:Null}" FontFamily="Dense" FontSize="24" MinHeight="30" BorderThickness="2,1,0,0"  PasswordChar="*" KeyDown="pB_KeyDown" Foreground="#FF637174" CaretBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                 <PasswordBox.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF3E4651" Offset="0"/>
