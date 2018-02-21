@@ -92,6 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animations.cs" />
     <Compile Include="Backbone.cs" />
     <Compile Include="AeroEffect.cs" />
     <Compile Include="Window1.xaml.cs">

@@ -39,34 +39,31 @@ namespace Theme.WPF
 
         public void Initialize()
         {
-            //Thread.Sleep(5000);
-            //SingulumData _RES = new SingulumData();
+            // This method runs asynchronously.
+            //int t = await Task.Run(() => Allocate());
+            //Console.WriteLine("Compute: " + t);
 
-            //this.Status = 0x01; // 0x01 = init started
-            //MainWindow.main.loginPassed = true;
+            SingulumData _RES = new SingulumData();
+            _RES = tryLoad("::");
 
-            MainWindow.main.loginPassed = true;
-
-
-            //if ( _RES.isNew == false )
-            //{
-            //    MainWindow.main.loginPassed = false;
-            //    //this.Status = 0xff; //data is new. nready for work
-            //}
-            //else
-            //{
-            //    MainWindow.main.loginPassed = true;
-            //    //this.Status = 0x02; //ready for work (data loaded successfully)
-            //}
+            this.Status = 0x01; // 0x01 = init started
+            if ( _RES.isNew == true )
+            {
+                this.Status = 0xff; //data is new. nready for work
+            }
+            else
+            {
+                this.Status = 0x02; //ready for work (data loaded successfully)
+            }
 
         } 
         public byte Status { get; internal set; } = 0x00;
         public string DataStorage { get; internal set; }
         public Singulum protocol = new Singulum();
-        /*public SingulumData tryLoad(string path)
+        public SingulumData tryLoad(string path)
         {
             Thread.Sleep(5000);
             return new SingulumData();
-        }*/
+        }
     }
 }

@@ -38,78 +38,24 @@ namespace Theme.WPF
         }
     }
 
-    public class AsyncAwait
-    {
-
-    }
-
-    public static class Animations
-    {
-        public static DoubleAnimation logChangeSize
-        {
-            get
-            { 
-                var t = new DoubleAnimation(); //0, 440, TimeSpan.FromSeconds(1)
-                t.From = 0;
-                t.To = 440;
-                t.Duration = TimeSpan.FromSeconds(1);
-                t.DecelerationRatio = 0.5;
-                t.AccelerationRatio = 0.5;
-                return t;
-            }
-            set{}
-        }
-
-        public static DoubleAnimation sFadeinAnimation
-        {
-            get
-            { 
-                var t = new DoubleAnimation(); //0, 1, TimeSpan.FromSeconds(1)
-                t.From = 0;
-                t.To = 1;
-                t.Duration = TimeSpan.FromSeconds(1);
-                t.AccelerationRatio = 0.5;
-                t.DecelerationRatio = 0.5;
-                return t;
-            }
-            set{}
-        }
-
-        public static DoubleAnimation logChangeSizeBack
-        {
-            get
-            {
-                var t = new DoubleAnimation(); //0, 440, TimeSpan.FromSeconds(1)
-                t.From = 440;
-                t.To = 0;
-                //t.Completed += ;
-                t.Duration = TimeSpan.FromSeconds(1);
-                t.DecelerationRatio = 0.5;
-                t.AccelerationRatio = 0.5;
-                return t;
-            }
-            set { }
-        }
-
-        public static DoubleAnimation sFadeoutAnimation
-        {
-            get
-            {
-                var t = new DoubleAnimation(); //0, 1, TimeSpan.FromSeconds(1)
-                t.From = 1;
-                t.To = 0;
-                t.Duration = TimeSpan.FromSeconds(1);
-                t.AccelerationRatio = 0.5;
-                t.DecelerationRatio = 0.5;
-                return t;
-            }
-            set { }
-        }
-
-    }
-
     public partial class MainWindow : Window
     {
+
+        private void _PASSERCHK()
+        {
+            //Must be called in a new thread
+
+            var BB = new Backbone("::");
+            BB.Initialize(); //May work as long as you need
+
+            if (BB.Status == 0x02) //If login successful
+            {
+                Dispatcher.BeginInvoke(new Action(delegate ()
+                {
+                    _loginPassed = true;
+                }));
+            }
+        }
 
         public static DoubleAnimation loginAnimation;
         public MainWindow()
@@ -117,13 +63,6 @@ namespace Theme.WPF
             
             InitializeComponent();
             main = this;
-            /*double n = 0.0;
-            for (n = 0; n < 1; n+=0.1) {
-                this.Opacity = n;
-                Thread.Sleep(10);
-            }*/
-
-            // анимация для ширины
 
         }
 
@@ -132,52 +71,12 @@ namespace Theme.WPF
             internal set;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-        public static int alphaCounter = 0;
-
-        public void drawLoading(object state)
-        {
-            /*
-            int C = 0;
-            while (C < 64)
-            {
-                .BeginInvoke(new Action(delegate ()
-                {
-                    System.Windows.Shapes.Rectangle rect;
-                    rect = new System.Windows.Shapes.Rectangle();
-                    rect.Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                    rect.Fill = new SolidColorBrush(Color.FromArgb(Convert.ToByte(C), 80, 90, 100));
-                    rect.Width = 5;
-                    rect.Height = 15;
-                    Canvas.SetLeft(rect, 15);
-                    Canvas.SetTop(rect, 15);
-                    loadingAnimation.Children.Add(rect);
-                }));
-                C++;
-                Thread.Sleep(1);
-            }
-            
-            for (double i = 0; i <= 1; i+=0.05) { 
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    this.Opacity = i;
-                }));
-                Thread.Sleep(20);
-            }*/
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
             this.Width = 0;
             this.BeginAnimation(Window.WidthProperty, Animations.logChangeSize );
             this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
-
-            TimerCallback tm = new TimerCallback(drawLoading);
-            // создаем таймер
-            Timer timer = new Timer(drawLoading, null, 0, Int32.MaxValue);
 
             Aero.AutoApply(this);
 
@@ -239,35 +138,40 @@ namespace Theme.WPF
                 exitFromLogin();
             }
         }
-        private bool _loginPassed;
+        public bool _loginPassed;
 
-        public bool loginPassed
+        public  bool loginPassed
         {
             get { return _loginPassed; }
             set { Dispatcher.BeginInvoke(new Action(() => { _loginPassed = value; })); }
         }
 
-        private void checkStabLog(object state)
+        public void checkStabLog(object state)
         {
-            if (!loginPassed)
+            while (true)
             {
                 Dispatcher.BeginInvoke(new Action(delegate ()
                 {
-                    this.WindowLable.Content = "NOT LOGGED IN!";
+                    this.WindowLable.Content = _loginPassed.ToString();
                 }));
-                
-            }
-            else
-            {
-                loginPassed = false;
-                Dispatcher.BeginInvoke(new Action(delegate ()
+
+                if (_loginPassed == false)
                 {
-                    this.WindowLable.Content = "LOGGED IN!";
-                    DoubleAnimation outAnim = Animations.logChangeSizeBack;
-                    outAnim.Completed += exitOnSlip;
-                    this.BeginAnimation(Window.WidthProperty, outAnim);
-                    this.BeginAnimation(Window.OpacityProperty, Animations.sFadeoutAnimation);
-                }));
+
+                }
+                else
+                {
+                    _loginPassed = false;
+                    Dispatcher.BeginInvoke(new Action(delegate ()
+                    {
+                        this.WindowLable.Content = "LOGGED IN!";
+                        DoubleAnimation outAnim = Animations.logChangeSizeBack;
+                        outAnim.Completed += exitOnSlip;
+                        this.BeginAnimation(Window.WidthProperty, outAnim);
+                        this.BeginAnimation(Window.OpacityProperty, Animations.sFadeoutAnimation);
+                    }));
+                }
+                Thread.Sleep(200);
             }
         }
 
@@ -293,16 +197,12 @@ namespace Theme.WPF
             fadeinAnimation.AccelerationRatio = 0.5;
             fadeinAnimation.DecelerationRatio = 0.5;
             fadeinAnimation.Duration = TimeSpan.FromSeconds(1);
-            //this.BeginAnimation(Backgrou, fadeinAnimation);
 
-            Backbone table = new Backbone(":::\\encrypted_sd.fish");
+            var _tabthch = new Thread(this.checkStabLog);
+            _tabthch.Start();
 
-            var _tabth = new Thread(table.Initialize);
+            var _tabth = new Thread(this._PASSERCHK);
             _tabth.Start();
-
-            //TimerCallback tm = new TimerCallback(checkStabLog);
-            // создаем таймер
-            Timer timer = new Timer(checkStabLog, null, 0, 500);
         }
 
         public void loadingTextFadein(object sender, EventArgs e)
