@@ -1,12 +1,12 @@
-## Welcome to GitHub Pages
+## Welcome to Foxon project
 
-You can use the [editor on GitHub](https://github.com/FurC0de/Foxon/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This project is fully maintained, designed and coded by [furcode](https://guides.github.com/furc0de/)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Something about reasons "why"
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+1. This is the first "big" project, created fully by myself *experience rises* 
+2. I want to keep "fully open source" policy in messaging domain
+   Really. We can't even see the gut of the products that we use every day
 
 ```markdown
 Syntax highlighted code block
