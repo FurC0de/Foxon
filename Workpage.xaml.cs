@@ -25,20 +25,6 @@ namespace Theme.WPF
             InitializeComponent();
         }
 
-        public void drawLoading(object state)
-        {
-            
-            for (double i = 0; i <= 2; i += 0.05)
-            {
-                Dispatcher.BeginInvoke(new Action(delegate ()
-                {
-                    this.Opacity = i;
-                }));
-                Thread.Sleep(10);
-            }
- 
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //TimerCallback tm = new TimerCallback(drawLoading);
@@ -51,6 +37,19 @@ namespace Theme.WPF
             this.BeginAnimation(Window.WidthProperty, sAnim);
             this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
 
+            Grid DynamicGrid = new Grid();
+
+            DynamicGrid.Width = 400;
+
+            DynamicGrid.HorizontalAlignment = HorizontalAlignment.Left;
+
+            DynamicGrid.VerticalAlignment = VerticalAlignment.Top;
+
+            DynamicGrid.ShowGridLines = true;
+
+            DynamicGrid.Background = new SolidColorBrush(Colors.LightSteelBlue);
+
+            ( DynamicGrid);
         }
     }
 }

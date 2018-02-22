@@ -62,7 +62,7 @@ namespace Theme.WPF
         public Singulum protocol = new Singulum();
         public SingulumData tryLoad(string path)
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(100);
             return new SingulumData();
         }
     }
