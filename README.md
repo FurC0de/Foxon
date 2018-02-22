@@ -4,34 +4,32 @@ This project is fully maintained, designed and coded by [furcode](https://guides
 
 ### Something about reasons "why"
 
-1. This is the first "big" project, created fully by myself \*experience rises\* 
-2. I want to keep "fully open source" policy in messaging domain
-   Really. We can't even see the gut of the products that we use every day
+<table>
+  <tr>
+     <td>1</td>
+     <td>This is the first "big" project, created fully by myself *experience rises*</td>
+  </tr>
+   <tr>
+     <td>2</td>
+     <td>
+ I want to keep "fully open source" policy in messaging domain Really. We can't even see the gut of the products that we use every day
+      </td>
+  </tr>
+</table>
+
+### Our cryptoprotocol: _Singulum_
 
 ```markdown
-Syntax highlighted code block
+We use:
 
-# Header 1
-## Header 2
-### Header 3
+1. ECDSA (Digital Signature Algorithm on Elliptic Curves)
+2. ECMQV (Menezes–Qu–Vanstone on Elliptic Curves)
+3. SHA3 (Keccak hash algorithm)
+4. Threefish (Symmetric-key tweakable block cipher)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/FurC0de/Foxon/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+For more details see [our docs](https://waaark.com/error) about Foxon, Singulum and so on.
 
 ### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Having trouble with us? Go away :3
