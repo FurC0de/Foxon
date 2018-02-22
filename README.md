@@ -4,7 +4,7 @@ This project is fully maintained, designed and coded by [furcode](https://guides
 
 ### Something about reasons "why"
 
-1. This is the first "big" project, created fully by myself *experience rises* 
+1. This is the first "big" project, created fully by myself \*experience rises\* 
 2. I want to keep "fully open source" policy in messaging domain
    Really. We can't even see the gut of the products that we use every day
 
