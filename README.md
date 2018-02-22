@@ -10,7 +10,7 @@ This project is fully maintained, designed and coded by [furcode](https://guides
      <td >This is the first "big" project, created fully by myself *experience rises*</td>
   </tr>
    <tr>
-     <td bgcolor="#ccaa00"><font color="#222">2</td>
+     <td bgcolor="#ccaa00"><font color="#222">2</font></td>
      <td>
  I want to keep "fully open source" policy in messaging domain Really. We can't even see the gut of the products that we use every day
       </td>
