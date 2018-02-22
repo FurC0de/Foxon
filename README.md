@@ -7,13 +7,13 @@ This project is fully maintained, designed and coded by [furcode](https://guides
 <table>
   <tr>
      <td bgcolor="#ccaa00">1</td>
-     <td >This is the first "big" project, created fully by myself *experience rises*</td>
+     <td ><font color="#222">This is the first "big" project, created fully by myself *experience rises*</font></td>
   </tr>
    <tr>
      <td bgcolor="#ccaa00">2</td>
-     <td>
+     <td><font color="#222">
  I want to keep "fully open source" policy in messaging domain Really. We can't even see the gut of the products that we use every day
-      </td>
+      </font></td>
   </tr>
 </table>
 
