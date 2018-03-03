@@ -24,18 +24,19 @@
         <Ellipse Fill="#FF933C29" HorizontalAlignment="Left" Height="9" Margin="384,6,0,0" VerticalAlignment="Top" Width="9" Grid.Column="1"/>
         <Ellipse Fill="#FF268787" HorizontalAlignment="Left" Height="9" Margin="370,6,0,0" VerticalAlignment="Top" Width="9" Grid.Column="1"/>
         <Ellipse Fill="#FF268771" HorizontalAlignment="Left" Height="9" Margin="356,6,0,0" VerticalAlignment="Top" Width="9" Grid.Column="1"/>
-        <Grid Margin="69,456,23,72" Grid.Column="1"/>
-        <Canvas Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="103,351,0,0" VerticalAlignment="Top" Width="25">
-            <Border BorderThickness="0" CornerRadius="8,8,8,8" Width="140" Height="31" Background="#FF9EBDE2" Panel.ZIndex="1" Canvas.Top="1">
-                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Hello there, my friend!" 
-                FontFamily="Gnuolane Rg" Foreground="#FF4F4A4A" FontSize="16"
+        <Grid x:Name="AnswerGrid" Margin="42,27,0,72" Grid.Column="1">
+            <Canvas x:Name="messageCanvas" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="33" Margin="200,558,0,0" VerticalAlignment="Top" Width="150">
+                <Border x:Name="messageBorder" BorderThickness="0" CornerRadius="8,8,8,8" Width="140" Height="30" Background="#FF9EBDE2" Canvas.Top="1" Panel.ZIndex="1" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <RichTextBox x:Name="myRichTextBox"
+                FontFamily="Roboto" Foreground="#FF4F4A4A" FontSize="14"
                 Padding="5" 
-                VerticalAlignment="Center" TextAlignment="Center"  
-             />
+                VerticalAlignment="Top" Height="35" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsHitTestVisible="True" AllowDrop="True" MinWidth="0" Margin="10,0,10,-5" Width="120" HorizontalAlignment="Center" Block.LineHeight="1" VerticalContentAlignment="Bottom"  
+                
+                                 />
 
-            </Border>
-            <Polygon Points="0,0 10,0 20,10 0,10" Fill="#FF9EBDE2" Canvas.Left="129" Canvas.Top="22" RenderTransformOrigin="0,0"/>
-        </Canvas>
-
+                </Border>
+                <Polygon x:Name="pointer" Points="0,0 10,0 20,10 0,10" Fill="#FF9EBDE2" Canvas.Left="130" Canvas.Top="21" RenderTransformOrigin="0,0"/>
+            </Canvas>
+        </Grid>
     </Grid>
 </Window>

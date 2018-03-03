@@ -95,6 +95,7 @@
     <Compile Include="Animations.cs" />
     <Compile Include="Backbone.cs" />
     <Compile Include="AeroEffect.cs" />
+    <Compile Include="FlowDocumentExtensions.cs" />
     <Compile Include="Workpage.xaml.cs">
       <DependentUpon>Workpage.xaml</DependentUpon>
     </Compile>
