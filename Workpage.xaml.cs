@@ -25,7 +25,19 @@ namespace Theme.WPF
     {
         public Canvas Self;
 
-        public double Bottom = 0;
+        public Point Position = new Point(0, 0);
+
+        public Canvas Make(Point Position)
+        {
+            this.Position = Position;
+            return Make();
+        }
+
+        public Canvas Make(double x, double y)
+        {
+            this.Position = new Point(x, y);
+            return Make();
+        }
 
         public Canvas Make()
         {
@@ -53,10 +65,10 @@ namespace Theme.WPF
 
             //adding pointer (polygon)
             Polygon signer = new Polygon();
-            System.Windows.Point Point1 = new System.Windows.Point(0,  0);
+            System.Windows.Point Point1 = new System.Windows.Point(0, 0);
             System.Windows.Point Point2 = new System.Windows.Point(10, 0);
             System.Windows.Point Point3 = new System.Windows.Point(20, 10);
-            System.Windows.Point Point4 = new System.Windows.Point(0,  10);
+            System.Windows.Point Point4 = new System.Windows.Point(0, 10);
 
             PointCollection myPointCollection = new PointCollection();
             myPointCollection.Add(Point1);
@@ -81,10 +93,11 @@ namespace Theme.WPF
             textfield.Width = 120;
             textfield.Background = null;
             textfield.BorderBrush = null;
-            textfield.SelectionBrush = null;
+            textfield.SelectionBrush = new SolidColorBrush(Color.FromArgb(0x44, 0x21, 0x21, 0x21));
             textfield.IsHitTestVisible = true;
             textfield.AllowDrop = true;
             textfield.MinWidth = 30;
+           // textfield.IsReadOnly = true;
             textfield.Margin = new Thickness(10, 0, 10, -5);
             textfield.VerticalContentAlignment = VerticalAlignment.Bottom;
             textfield.TextChanged += changeSizeAuto;
@@ -97,6 +110,35 @@ namespace Theme.WPF
             return Self;
         }
 
+        public void setText(string text)
+        {
+            IEnumerable<Border> blocks = Self.Children.OfType<Border>();
+            Border blck = blocks.Last();
+            RichTextBox textbox = (RichTextBox)blck.Child;
+
+            FlowDocument myFlowDoc = new FlowDocument();
+            // Add paragraphs to the FlowDocument.
+            Paragraph Par = new Paragraph();
+            string[] Runs = text.Split(new string[] { "\r\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < Runs.Length; i++)
+            {
+                if (i == Runs.Length - 1)
+                {
+                    Par.Inlines.Add((new Run(Runs[i])));
+                }
+                else
+                {
+                    Par.Inlines.Add((new Run(Runs[i] + Environment.NewLine)));
+                }
+                //myFlowDoc.Blocks.Add(new Paragraph(new Run(a)));
+            }
+
+            myFlowDoc.Blocks.Add(Par);
+            // Add initial content to the RichTextBox.
+            textbox.Document = myFlowDoc;
+        }
+
         private void changeSizeAuto(object sender, EventArgs e)
         {
             // to show that you'll get an enumerable of rectangles.
@@ -106,20 +148,22 @@ namespace Theme.WPF
             RichTextBox textbox = (RichTextBox)blck.Child;
 
             textbox.Height = textbox.Document.GetFormattedText().Height * 1.051 + 13;
-            textbox.Width = Math.Min(textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 140);    
+            textbox.Width = Math.Min(textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 300);
             blck.Height = textbox.Document.GetFormattedText().Height * 1.051 + 13;
-            Self.Margin = new Thickness(10, Bottom-blck.Height+3, 0, 0);
+            blck.Width = Math.Min(textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 300);
+            Canvas.SetRight(blck, 10);
+            Self.Margin = new Thickness(Position.X, Position.Y - blck.Height + 3, 0, 0);
 
             IEnumerable<Polygon> pointers = Self.Children.OfType<Polygon>();
             Polygon pointer = pointers.Last();
-            Canvas.SetTop(pointer, blck.Height-9);
+            Canvas.SetTop(pointer, blck.Height - 9);
         }
     }
 
     public class UIElements
     {
-        
-        private Size MeasureString(string candidate, FontFamily ff, FontStyle fs , FontWeight fw, FontStretch fsr, int fsz)
+
+        private Size MeasureString(string candidate, FontFamily ff, FontStyle fs, FontWeight fw, FontStretch fsr, int fsz)
         {
             var formattedText = new FormattedText(
                 candidate,
@@ -157,36 +201,10 @@ namespace Theme.WPF
             this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
 
             UIMessage mtest = new UIMessage();
-
-            AnswerGrid.Children.Add(mtest.Make());
-
+            AnswerGrid.Children.Add(mtest.Make(AnswerGrid.Width-150, AnswerGrid.ActualHeight));
             Grid.SetRow(mtest.Self, 0);
             Grid.SetColumn(mtest.Self, 0);
-
-
-            myRichTextBox.Focus();
-            myRichTextBox.TextChanged += update_onChange;
-
-            // Create a FlowDocument to contain content for the RichTextBox.
-            FlowDocument myFlowDoc = new FlowDocument();
-
-            // Add paragraphs to the FlowDocument.
-            Paragraph nPar = new Paragraph();
-            nPar.Inlines.Add(new Run("31415926\r\n33181930589333"));
-            
-            myFlowDoc.Blocks.Add(nPar);
-            // Add initial content to the RichTextBox.
-            myRichTextBox.Document = myFlowDoc;
-        }
-
-        public void update_onChange(object sender, EventArgs e)
-        {
-           
-            myRichTextBox.Width = Math.Min(myRichTextBox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 140);
-            myRichTextBox.Height = myRichTextBox.Document.GetFormattedText().Height*1.051 + 13;
-            messageBorder.Height = myRichTextBox.Document.GetFormattedText().Height*1.051 + 13;
-            messageCanvas.Margin = new Thickness(10, 400+13+19-messageBorder.Height, 0, 0);
-            Canvas.SetTop(pointer, messageBorder.Height-9);
+            mtest.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
 
         }
     }
