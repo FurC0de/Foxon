@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,67 @@ namespace Theme.WPF
     /// Логика взаимодействия для Window1.xaml
     /// </summary>
     /// 
+    
+
+    public class mPositioner
+    {
+        public mPositioner(Grid parent)
+        {
+            mainParent = parent;
+        }
+
+        public mPositioner()
+        {
+
+        }
+
+        Grid mainParent;
+
+        public double messageCoordinatesCounter = 0;
+
+        public void Next (UIMessage m)
+        {
+            messageCoordinatesCounter += m.Size.Height + 40;
+        }
+
+        public void addToList(UIMessage m)
+        {
+            m.Position = new Point(mainParent.Width - 160, messageCoordinatesCounter);
+            Next(m);
+            mainParent.Height = messageCoordinatesCounter;
+        }
+    }
 
     public class UIMessage
     {
+        public UIMessage()
+        {
+            this.Self = Make();
+        }
+
+        public UIMessage(double x, double y)
+        {
+            this._position = new Point(x, y);
+            this.Self = Make();
+        }
+
+        public UIMessage(Point pos)
+        {
+            this._position = pos;
+            this.Self = Make();
+        }
+
         public Canvas Self;
 
-        public Point Position = new Point(0, 0);
+        private Point _position;
 
+        public Point Position
+        {
+            get { return _position; }
+            set { _position = value; changeSizeAuto(this, null);  }
+        }
+
+        /*
         public Canvas Make(Point Position)
         {
             this.Position = Position;
@@ -38,7 +93,7 @@ namespace Theme.WPF
             this.Position = new Point(x, y);
             return Make();
         }
-
+        */
         public Canvas Make()
         {
             //create new canvas
@@ -139,6 +194,8 @@ namespace Theme.WPF
             textbox.Document = myFlowDoc;
         }
 
+        public Size Size;
+
         private void changeSizeAuto(object sender, EventArgs e)
         {
             // to show that you'll get an enumerable of rectangles.
@@ -157,6 +214,7 @@ namespace Theme.WPF
             IEnumerable<Polygon> pointers = Self.Children.OfType<Polygon>();
             Polygon pointer = pointers.Last();
             Canvas.SetTop(pointer, blck.Height - 9);
+            this.Size = new Size(blck.Width, blck.Height);
         }
     }
 
@@ -200,12 +258,37 @@ namespace Theme.WPF
             this.BeginAnimation(Window.WidthProperty, sAnim);
             this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
 
-            UIMessage mtest = new UIMessage();
-            AnswerGrid.Children.Add(mtest.Make(AnswerGrid.Width-150, AnswerGrid.ActualHeight));
+            UIMessage mtest = new UIMessage(AnswerGrid.Width - 160, 160);
+            mainGrid.Children.Add(mtest.Self);
             Grid.SetRow(mtest.Self, 0);
             Grid.SetColumn(mtest.Self, 0);
             mtest.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
 
+            mPositioner p = new mPositioner(mainGrid);
+            p.addToList(mtest);
+            mainGrid.Height = p.messageCoordinatesCounter;
+
+            /*
+            UIMessage mtest = new UIMessage();
+            mainGrid.Children.Add(mtest.Make(AnswerGrid.Width-160, 160));
+            Grid.SetRow(mtest.Self, 0);
+            Grid.SetColumn(mtest.Self, 0);
+            mtest.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
+
+            UIMessage mtest2 = new UIMessage();
+            mainGrid.Children.Add(mtest2.Make(AnswerGrid.Width - 160, AnswerGrid.ActualHeight));
+            Grid.SetRow(mtest2.Self, 0);
+            Grid.SetColumn(mtest2.Self, 0);
+            mtest2.setText("answernumber2\r\n fuckitfuckifuckitfuckitfuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit");
+
+            UIMessage mtest3 = new UIMessage();
+            mainGrid.Children.Add(mtest3.Make(AnswerGrid.Width - 160, AnswerGrid.ActualHeight+400));
+            Grid.SetRow(mtest3.Self, 0);
+            Grid.SetColumn(mtest3.Self, 0);
+            mtest3.setText("answernumber3\r\n fuckitfuckifuckitfuckitfuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit\r\n fuckit");
+            mainGrid.Height = 1500;
+            */
         }
     }
 }
+
