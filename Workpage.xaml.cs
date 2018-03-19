@@ -40,37 +40,49 @@ namespace Theme.WPF
 
         public void Next (UIMessage m)
         {
-            messageCoordinatesCounter += m.Size.Height + 40;
+            messageCoordinatesCounter += m.Size.Height + 10;
         }
 
         public void addToList(UIMessage m)
         {
-            m.Position = new Point(mainParent.Width - 160, messageCoordinatesCounter);
             Next(m);
+            if (m.isUserMessage)
+            {
+                m.Position = new Point(10, messageCoordinatesCounter);
+            }
+            else
+            {
+                m.Position = new Point(mainParent.Width - 160, messageCoordinatesCounter);
+            }
             mainParent.Height = messageCoordinatesCounter;
         }
     }
 
     public class UIMessage
     {
-        public UIMessage()
+        public UIMessage(bool isSelfUser)
         {
+            this.isUserMessage = isSelfUser;
             this.Self = Make();
         }
 
-        public UIMessage(double x, double y)
+        public UIMessage(double x, double y, bool isSelfUser)
         {
+            this.isUserMessage = isSelfUser;
             this._position = new Point(x, y);
             this.Self = Make();
         }
 
-        public UIMessage(Point pos)
+        public UIMessage(Point pos, bool isSelfUser)
         {
+            this.isUserMessage = isSelfUser;
             this._position = pos;
             this.Self = Make();
         }
 
         public Canvas Self;
+
+        public bool isUserMessage = true;
 
         private Point _position;
 
@@ -115,14 +127,36 @@ namespace Theme.WPF
             Canvas.SetTop(border, 1);
             Panel.SetZIndex(border, 1);
             border.VerticalAlignment = VerticalAlignment.Bottom;
-            border.HorizontalAlignment = HorizontalAlignment.Right;
 
+
+            if (!isUserMessage)
+            {
+                border.HorizontalAlignment = HorizontalAlignment.Left;
+            }
+            else
+            {
+                border.HorizontalAlignment = HorizontalAlignment.Right;
+            }
             //adding pointer (polygon)
+            System.Windows.Point Point1;
+            System.Windows.Point Point2;
+            System.Windows.Point Point3;
+            System.Windows.Point Point4;
             Polygon signer = new Polygon();
-            System.Windows.Point Point1 = new System.Windows.Point(0, 0);
-            System.Windows.Point Point2 = new System.Windows.Point(10, 0);
-            System.Windows.Point Point3 = new System.Windows.Point(20, 10);
-            System.Windows.Point Point4 = new System.Windows.Point(0, 10);
+            if (isUserMessage)
+            {
+                Point2 = new System.Windows.Point(10, 0);
+                Point3 = new System.Windows.Point(20, 0);
+                Point4 = new System.Windows.Point(20, 10);
+                Point1 = new System.Windows.Point(0, 10);
+            }
+            else
+            {
+                Point1 = new System.Windows.Point(0, 0);
+                Point2 = new System.Windows.Point(10, 0);
+                Point3 = new System.Windows.Point(20, 10);
+                Point4 = new System.Windows.Point(0, 10);
+            }
 
             PointCollection myPointCollection = new PointCollection();
             myPointCollection.Add(Point1);
@@ -131,7 +165,16 @@ namespace Theme.WPF
             myPointCollection.Add(Point4);
             signer.Points = myPointCollection;
             signer.Fill = new SolidColorBrush(Color.FromArgb(0xff, 0x9e, 0xbd, 0xe2));
-            Canvas.SetLeft(signer, 130);
+
+            if (!isUserMessage)
+            {
+                Canvas.SetLeft(signer, 130);
+            }
+            else
+            {
+                Canvas.SetLeft(signer, 10);
+            }
+            
             Canvas.SetTop(signer, 21);
             signer.RenderTransformOrigin = new Point(0, 0);
 
@@ -151,14 +194,24 @@ namespace Theme.WPF
             textfield.IsHitTestVisible = true;
             textfield.AllowDrop = true;
             textfield.MinWidth = 30;
-           // textfield.IsReadOnly = true;
+            textfield.IsReadOnly = true;
             textfield.Margin = new Thickness(10, 0, 10, -5);
             textfield.VerticalContentAlignment = VerticalAlignment.Bottom;
             textfield.TextChanged += changeSizeAuto;
             Block.SetLineHeight(textfield, 1);
-
             border.Child = textfield;
 
+            //adding time
+            TextBlock time = new TextBlock();
+            time.Width = 30;
+            time.Text = DateTime.Now.ToString("t");
+            time.Foreground = new SolidColorBrush(Color.FromArgb(0xbb, 0x4f, 0x4f, 0x4f));
+            time.FontFamily = new FontFamily("Roboto");
+            time.FontSize = 11;
+            time.Margin = new Thickness(10,10,10,10);
+
+            Self.Children.Add(time);
+            Canvas.SetZIndex(time, 9999);
             Self.Children.Add(border);
             Self.Children.Add(signer);
             return Self;
@@ -207,12 +260,35 @@ namespace Theme.WPF
             textbox.Width = Math.Min(textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 300);
             blck.Height = textbox.Document.GetFormattedText().Height * 1.051 + 13;
             blck.Width = Math.Min(textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 30, 300);
-            Canvas.SetRight(blck, 10);
+            if (isUserMessage)
+            {
+                Canvas.SetLeft(blck, 20);
+            }
+            else
+            {
+                Canvas.SetRight(blck, 10);
+            }
+            
             Self.Margin = new Thickness(Position.X, Position.Y - blck.Height + 3, 0, 0);
 
             IEnumerable<Polygon> pointers = Self.Children.OfType<Polygon>();
             Polygon pointer = pointers.Last();
             Canvas.SetTop(pointer, blck.Height - 9);
+
+            IEnumerable<TextBlock> textblocks = Self.Children.OfType<TextBlock>();
+            TextBlock txtblk = textblocks.Last();
+            Canvas.SetTop(txtblk, blck.Height - 24);
+
+            if (isUserMessage)
+            {
+                Canvas.SetLeft(txtblk, blck.Width);
+            }
+            else
+            {
+                Canvas.SetRight(txtblk, blck.Width);
+                
+            }
+
             this.Size = new Size(blck.Width, blck.Height);
         }
     }
@@ -257,16 +333,29 @@ namespace Theme.WPF
             this.BeginAnimation(Window.WidthProperty, sAnim);
             this.BeginAnimation(Window.OpacityProperty, Animations.sFadeinAnimation);
 
-            UIMessage mtest = new UIMessage(AnswerGrid.Width - 160, 160);
-            mainGrid.Children.Add(mtest.Self);
-            Grid.SetRow(mtest.Self, 0);
-            Grid.SetColumn(mtest.Self, 0);
-            mtest.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
+            UIMessage mtest1 = new UIMessage(AnswerGrid.Width - 160, 160, false);
+            mainGrid.Children.Add(mtest1.Self);
+            Grid.SetRow(mtest1.Self, 0);
+            Grid.SetColumn(mtest1.Self, 0);
+            mtest1.setText("Помню\r\nНе зря\r\nПятый день ноября\r\nИ заговор\r\nПороховой\r\n since \r\n 1487\r\n  487\r\n   87\r\n    7");
+
+            UIMessage mtest2 = new UIMessage(AnswerGrid.Width - 160, 160, true);
+            mainGrid.Children.Add(mtest2.Self);
+            Grid.SetRow(mtest2.Self, 0);
+            Grid.SetColumn(mtest2.Self, 0);
+            mtest2.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
+
+            UIMessage mtest3 = new UIMessage(AnswerGrid.Width - 160, 160, false);
+            mainGrid.Children.Add(mtest3.Self);
+            Grid.SetRow(mtest3.Self, 0);
+            Grid.SetColumn(mtest3.Self, 0);
+            mtest3.setText("3141\r\n5926\r\n3318\r\n1930\r\n5893\r\n3223");
 
             mPositioner p = new mPositioner(mainGrid);
-            p.addToList(mtest);
+            p.addToList(mtest1);
+            p.addToList(mtest2);
+            p.addToList(mtest3);
             mainGrid.Height = p.messageCoordinatesCounter;
-
             /*
             UIMessage mtest = new UIMessage();
             mainGrid.Children.Add(mtest.Make(AnswerGrid.Width-160, 160));

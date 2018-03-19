@@ -25,8 +25,9 @@
         <Ellipse Fill="#FF268787" HorizontalAlignment="Left" Height="9" Margin="270,6,0,0" VerticalAlignment="Top" Width="9" Grid.Column="1" Panel.ZIndex="99"/>
         <Ellipse Fill="#FF268771" HorizontalAlignment="Left" Height="9" Margin="256,6,0,0" VerticalAlignment="Top" Width="9" Grid.Column="1" Panel.ZIndex="99"/>
         <Grid x:Name="AnswerGrid" Width="1000" Margin="0,27,0,38" Grid.ColumnSpan="2">
-            <ScrollViewer x:Name="mainScroller" HorizontalAlignment="Left" Height="635" VerticalAlignment="Top" Width="1000" VerticalScrollBarVisibility="Visible">
+            <ScrollViewer x:Name="mainScroller" HorizontalAlignment="Left" Height="635" VerticalAlignment="Top" Width="1000" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="mainGrid" ScrollViewer.CanContentScroll="True" Width="1000">
+                    <TextBlock Width="30" Text="16:30" Foreground="#FF787878" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Roboto" FontSize="11" TextDecorations="{x:Null}" Margin="492,310,478,309"/>
                 </Grid>
             </ScrollViewer>
             <!--<Canvas x:Name="messageCanvas" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="33" Margin="200,558,0,0" VerticalAlignment="Top" Width="150">
