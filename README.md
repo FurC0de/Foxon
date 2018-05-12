@@ -19,15 +19,12 @@ This project is fully maintained, designed and coded by [furcode](https://guides
 
 ### Our cryptoprotocol: _Singulum_
 
-```markdown
-We use:
+**We use:**
 
-1. ECDSA (Meliorated FIPS<sup>[1](#fn_fips)</sup> for digital signatures which uses elliptic curve cryptography) 
-2. ECMQV (Authenticated protocol for key agreement based on the Diffie–Hellman scheme which uses elliptic curve cryptography)
-3. SHA3 (Keccak hash algorithm)
-4. Threefish (Symmetric-key tweakable block cipher)
-
-```
+ - ***ECDSA*** (Meliorated FIPS<sup>[1](#fn_fips)</sup> markdown for digital signatures which uses elliptic curve cryptography) <br />
+ - ***ECMQV*** (Authenticated protocol for key agreement based on the Diffie–Hellman scheme which uses elliptic curve cryptography) <br />
+ - ***SHA3*** (Keccak hash algorithm) <br />
+ - ***Threefish*** (Symmetric-key tweakable block cipher) <br />
 
 For more details see [our docs](https://waaark.com/error) about Foxon, Singulum and so on.
 
