@@ -33,3 +33,6 @@ For more details see [our docs](https://waaark.com/error) about Foxon, Singulum 
 
 ### Support or Contact
 Having trouble with us? Go away :3
+
+### License
+![alt text](https://raw.githubusercontent.com/FurC0de/Foxon/master/mozilla_license.png)
