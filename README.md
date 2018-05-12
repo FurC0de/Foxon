@@ -22,8 +22,8 @@ This project is fully maintained, designed and coded by [furcode](https://guides
 ```markdown
 We use:
 
-1. ECDSA (Digital Signature Algorithm on Elliptic Curves)
-2. ECMQV (Menezes–Qu–Vanstone on Elliptic Curves)
+1. ECDSA (Meliorated FIPS<sup>[1](#fn_fips)</sup> for digital signatures which uses elliptic curve cryptography) 
+2. ECMQV (Authenticated protocol for key agreement based on the Diffie–Hellman scheme which uses elliptic curve cryptography)
 3. SHA3 (Keccak hash algorithm)
 4. Threefish (Symmetric-key tweakable block cipher)
 
@@ -36,3 +36,6 @@ Having trouble with us? Go away :3
 
 ### License
 ![alt text](https://raw.githubusercontent.com/FurC0de/Foxon/master/mozilla_license.png)
+
+### Footnotes
+<a name="fn_fips">1</a>: Federal Information Processing Standards (FIPS) are publicly announced standards developed by the United States federal government for use in computer systems by non-military government agencies and government contractors.
